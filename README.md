@@ -1,1 +1,2 @@
-# Jonathan Fourie has entered the chat
+# Jonathan Fourie...
+# has entered the chat
