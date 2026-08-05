@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer 1 Diagnostics — Series Bible & Episode Outline</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --panel-border: #262b36;
+    --text: #dfe3ea;
+    --muted: #8b93a3;
+    --accent: #5fb0ff;
+    --accent-dim: #2b5f8a;
+    --amber: #f2b544;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+  }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  header.hero {
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-size: 2.1rem;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  nav.toc {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 44px;
+  }
+
+  nav.toc h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  nav.toc ul {
+    columns: 2;
+    -webkit-columns: 2;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  nav.toc li { margin-bottom: 6px; break-inside: avoid; }
+
+  nav.toc a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  nav.toc a:hover { color: var(--accent); border-bottom-color: var(--accent-dim); }
+
+  section { margin-bottom: 48px; }
+
+  h2.section-title {
+    font-size: 1.5rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    margin: 0 0 20px;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+
+  .field {
+    margin-bottom: 18px;
+  }
+
+  .field .label {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .field p, .field ul {
+    margin: 0;
+  }
+
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+
+  .episode {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 24px 26px;
+    margin-bottom: 22px;
+    scroll-margin-top: 20px;
+  }
+
+  .episode-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .episode-number {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(95,176,255,0.1);
+    border: 1px solid var(--accent-dim);
+    border-radius: 6px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+
+  .episode-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .runtime {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  .episode-meta {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 6px 14px;
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+  }
+
+  .episode-meta dt {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--amber);
+    padding-top: 2px;
+  }
+
+  .episode-meta dd {
+    margin: 0;
+    color: var(--text);
+  }
+
+  .finale {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 1px rgba(95,176,255,0.15);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  thead th {
+    text-align: left;
+    background: #1d212b;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+  }
+
+  tbody td {
+    padding: 10px 14px;
+    border-top: 1px solid var(--panel-border);
+  }
+
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--panel-border);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    nav.toc ul { columns: 1; }
+    .episode-meta { grid-template-columns: 1fr; }
+    .episode-meta dt { padding-top: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Series Bible &amp; Episode Outline</p>
+    <h1>Layer 1 Diagnostics</h1>
+    <p class="subtitle">A working network engineer intentionally breaks Ethernet cabling in every way real techs encounter in the field, shows what each fault looks like on real diagnostic tools, then repairs and documents it.</p>
+  </header>
+
+  <nav class="toc">
+    <h2>On this page</h2>
+    <ul>
+      <li><a href="#logline">Logline</a></li>
+      <li><a href="#audience">Audience</a></li>
+      <li><a href="#promise">Core promise</a></li>
+      <li><a href="#shape">Standard episode shape</a></li>
+      <li><a href="#tone">Tone &amp; visual signature</a></li>
+      <li><a href="#segments">Recurring segments</a></li>
+      <li><a href="#equipment">Equipment list</a></li>
+      <li><a href="#cadence">Publishing cadence</a></li>
+      <li><a href="#episodes">Episode outline (13 eps)</a></li>
+      <li><a href="#reference">Quick reference table</a></li>
+    </ul>
+  </nav>
+
+  <section id="logline">
+    <h2 class="section-title">Series Bible</h2>
+
+    <div class="field">
+      <div class="label">Working title</div>
+      <p><strong>Layer 1 Diagnostics</strong> &nbsp;<span style="color:var(--muted)">(alt: Cable Doctor, The Wire Whisperer, Signal Lost)</span></p>
+    </div>
+
+    <div class="field">
+      <div class="label">Logline</div>
+      <p>A working network engineer intentionally breaks Ethernet cabling in every way real techs encounter in the field, shows exactly what each fault looks like on real diagnostic tools, then repairs and documents it — teaching viewers to diagnose hardware issues instead of guessing.</p>
+    </div>
+
+    <div class="field" id="audience">
+      <div class="label">Audience</div>
+      <ul>
+        <li>IT/helpdesk techs who've never had to chase a physical-layer fault</li>
+        <li>Homelab and prosumer network people</li>
+        <li>Trade-adjacent viewers (electricians, low-voltage installers, Network+/A+ students)</li>
+        <li>Secondary: senior engineers watching for war stories (and nitpicking terminations — good for engagement)</li>
+      </ul>
+    </div>
+
+    <div class="field" id="promise">
+      <div class="label">Core promise (every episode)</div>
+      <p>"Here's a real fault, here's what it looks like on the tool, here's the fix, here's how to document it so the next person doesn't repeat your afternoon."</p>
+    </div>
+
+    <div class="field" id="shape">
+      <div class="label">Standard episode shape</div>
+      <ul>
+        <li><strong>Symptom</strong> — what the end user / helpdesk ticket says</li>
+        <li><strong>Wrong assumption</strong> — what gets blamed first and why that wastes time</li>
+        <li><strong>Diagnosis</strong> — tester in hand, narrated in real time</li>
+        <li><strong>Reveal</strong> — show the actual induced fault</li>
+        <li><strong>Fix</strong> — full repair</li>
+        <li><strong>Verify</strong> — retest, confirm clean</li>
+        <li><strong>Field Notes</strong> — 30–60 sec war story that mirrors the fault</li>
+      </ul>
+    </div>
+
+    <div class="field" id="tone">
+      <div class="label">Tone</div>
+      <p>Confident, unhurried, dry humor. Talk to the viewer like a competent junior tech shadowing you, not a classroom. No sound-effect gimmicks — let tester beeps and crimp-tool clacks be the sound design.</p>
+    </div>
+
+    <div class="field">
+      <div class="label">Visual signature</div>
+      <ul>
+        <li>Macro/clamp shot on every tester screen — if the viewer can't read the display, the episode fails</li>
+        <li>Consistent lower-third graphic for Symptom / Diagnosis / Fix section markers</li>
+        <li>End card with a one-line "what you learned" recap</li>
+      </ul>
+    </div>
+
+    <div class="field" id="segments">
+      <div class="label">Recurring segments</div>
+      <ul>
+        <li><strong>Guess the Fault</strong> — pause after the diagnostic reveal, invite viewers to guess before the answer</li>
+        <li><strong>Tool Tier Callout</strong> — what a cheap tester shows vs. what only a certifier catches</li>
+        <li><strong>Field Notes</strong> — closing war story</li>
+      </ul>
+    </div>
+
+    <div class="field" id="equipment">
+      <div class="label">Equipment list</div>
+      <ul>
+        <li>Cheap tone/probe kit</li>
+        <li>Mid-range wiremap/continuity tester</li>
+        <li>Certifier-class tester (Fluke or similar) for split-pair / spec-compliance episodes</li>
+        <li>Punch-down tool, crimper, strippers, keystone jacks, wall plates, patch panel</li>
+        <li>Fiber scope (bonus-tier episodes)</li>
+        <li>Camera macro rig or phone clamp for screen shots</li>
+      </ul>
+    </div>
+
+    <div class="field" id="cadence">
+      <div class="label">Publishing cadence</div>
+      <p>Weekly, 8–15 min run times. Grouped as "Season 1: Copper Fundamentals" so the channel reads as a series, not scattered videos.</p>
+    </div>
+  </section>
+
+  <section id="episodes">
+    <h2 class="section-title">Episode-by-Episode Outline</h2>
+
+    <div class="episode" id="ep1">
+      <div class="episode-header">
+        <span class="episode-number">EP 01</span>
+        <h3 class="episode-title">The Toolkit: What's Actually In My Bag</h3>
+        <span class="runtime">8–10 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>None — intro / setup episode</dd>
+        <dt>Shots</dt><dd>Overhead flat-lay of tools, close-ups of each tool on a known-good cable, side-by-side cheap tester vs. certifier</dd>
+      </dl>
+      <p>Introduce the channel premise, show each tool, run a known-good cable through each one so viewers have a baseline "this is what correct looks like" before faults start. End with the season roadmap.</p>
+    </div>
+
+    <div class="episode" id="ep2">
+      <div class="episode-header">
+        <span class="episode-number">EP 02</span>
+        <h3 class="episode-title">568A vs 568B: Does It Even Matter?</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>One end terminated 568A, other 568B</dd>
+        <dt>Shots</dt><dd>Split screen of both termination standards on a jack, macro of tester wiremap display, cable pull test</dd>
+      </dl>
+      <p>Diagnose via wiremap, explain when this is genuinely a problem (straight-through expected) vs. a non-issue on modern auto-MDIX NICs, re-terminate one end to match, verify.</p>
+    </div>
+
+    <div class="episode" id="ep3">
+      <div class="episode-header">
+        <span class="episode-number">EP 03</span>
+        <h3 class="episode-title">The Wall Plate That Lied</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Improperly terminated wall plate (wrong pin order, untwisted pairs, poor seating)</dd>
+        <dt>Shots</dt><dd>Macro on punch-down block, tester wiremap before/after</dd>
+      </dl>
+      <p>Symptom = intermittent link. Diagnose with wiremap, open the plate on camera, show the mess, re-terminate correctly, verify, document with a labeled photo for the ticket.</p>
+    </div>
+
+    <div class="episode" id="ep4">
+      <div class="episode-header">
+        <span class="episode-number">EP 04</span>
+        <h3 class="episode-title">Cut Wire, No Warning</h3>
+        <span class="runtime">10–14 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>2–3 conductors cut a few inches behind the wall plate</dd>
+        <dt>Shots</dt><dd>Tester distance-to-fault reading (macro, hero shot), then cutting open the jacket to reveal the damage</dd>
+      </dl>
+      <p>This is the episode to teach <strong>TDR distance-to-fault</strong> if your tester supports it. Show how the tool tells you <em>where</em> before you ever open the wall. Splice or pull-and-replace, verify, document.</p>
+    </div>
+
+    <div class="episode" id="ep5">
+      <div class="episode-header">
+        <span class="episode-number">EP 05</span>
+        <h3 class="episode-title">The Split Pair That Passes Every Cheap Test</h3>
+        <span class="runtime">12–15 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Correct pins used, but conductors from the wrong twisted pair (e.g. pins 3/6 not from the same pair)</dd>
+        <dt>Shots</dt><dd>Cheap tester showing "PASS," then certifier showing NEXT/crosstalk failure — this contrast is the whole episode</dd>
+      </dl>
+      <p>The flagship "tool tier" episode. Explains why a link can come up, pass a basic continuity test, and still tank throughput under load. Re-terminate with correct pair mapping, verify on certifier.</p>
+    </div>
+
+    <div class="episode" id="ep6">
+      <div class="episode-header">
+        <span class="episode-number">EP 06</span>
+        <h3 class="episode-title">Five Cables, Zero Labels</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>4–5 runs mislabeled at one end</dd>
+        <dt>Shots</dt><dd>Wide shot of unlabeled patch panel, tone probe in hand tracing each run, label maker close-ups</dd>
+      </dl>
+      <p>Trace-and-tag from scratch using a tone generator/probe. End with a mini-tutorial on a real labeling convention (room-panel-port numbering scheme) so viewers leave with a system, not just "label your stuff."</p>
+    </div>
+
+    <div class="episode" id="ep7">
+      <div class="episode-header">
+        <span class="episode-number">EP 07</span>
+        <h3 class="episode-title">Bend Radius: The Fault You Don't See Until Later</h3>
+        <span class="runtime">8–10 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Cable kinked / stapled with bend radius violated during install; works now, degrades over time</dd>
+        <dt>Shots</dt><dd>Before/after certifier readings (install day vs. "6 months later"), macro on the kink itself</dd>
+      </dl>
+      <p>Good "why did this randomly start failing" narrative — ties physical damage to gradual signal degradation rather than instant failure.</p>
+    </div>
+
+    <div class="episode" id="ep8">
+      <div class="episode-header">
+        <span class="episode-number">EP 08</span>
+        <h3 class="episode-title">Nail Through the Jacket</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Fastener partially through the cable, causing an intermittent short/ground fault</dd>
+        <dt>Shots</dt><dd>Tester showing an intermittent/flaky fault, reveal of the fastener</dd>
+      </dl>
+      <p>Teaches diagnosing intermittent faults specifically, which behave differently from clean breaks. Repair via cable replacement (patching over damage isn't code-legal for permanent runs — say so on camera).</p>
+    </div>
+
+    <div class="episode" id="ep9">
+      <div class="episode-header">
+        <span class="episode-number">EP 09</span>
+        <h3 class="episode-title">Patch Panel vs. Wall Plate: Which End Lied to You?</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Same wiremap fault, but on the patch panel side instead of the wall plate side</dd>
+        <dt>Shots</dt><dd>Tester at wall plate reads fine, tester at panel reveals the fault</dd>
+      </dl>
+      <p>Reinforces a habit: always isolate which end of the run is actually broken before you start opening things up.</p>
+    </div>
+
+    <div class="episode" id="ep10">
+      <div class="episode-header">
+        <span class="episode-number">EP 10</span>
+        <h3 class="episode-title">The Closet With 40 Unlabeled Cables</h3>
+        <span class="runtime">14–18 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Documentation-from-scratch special</dd>
+        <dt>Shots</dt><dd>Wide establishing shot of the chaos, sped-up tracing montage, final labeled/organized reveal</dd>
+      </dl>
+      <p>Full trace-and-document exercise from zero. Satisfying before/after. Great thumbnail material.</p>
+    </div>
+
+    <div class="episode" id="ep11">
+      <div class="episode-header">
+        <span class="episode-number">EP 11</span>
+        <h3 class="episode-title">Dirty Glass: The Fiber Episode</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Dirty/contaminated fiber connector end-face causing high error rates (bonus tier)</dd>
+        <dt>Shots</dt><dd>Fiber scope view of a dirty vs. clean end-face, cleaning tool in use</dd>
+      </dl>
+      <p>Introduces fiber troubleshooting as a contrast to copper — same "invisible fault, visible tool" theme.</p>
+    </div>
+
+    <div class="episode" id="ep12">
+      <div class="episode-header">
+        <span class="episode-number">EP 12</span>
+        <h3 class="episode-title">PoE Down, Data Up</h3>
+        <span class="runtime">10–12 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Fault</dt><dd>Damaged pair takes down PoE delivery while data link still negotiates (bonus tier)</dd>
+        <dt>Shots</dt><dd>Tester/PoE checker readings, camera powering an IP camera or phone to demonstrate the symptom</dd>
+      </dl>
+      <p>Useful for anyone doing camera/AP installs — a fault category most general IT content ignores.</p>
+    </div>
+
+    <div class="episode finale" id="ep13">
+      <div class="episode-header">
+        <span class="episode-number">EP 13 · FINALE</span>
+        <h3 class="episode-title">Field Day: Diagnose 5 Faults, No Prep</h3>
+        <span class="runtime">15–20 min</span>
+      </div>
+      <dl class="episode-meta">
+        <dt>Format</dt><dd>Unscripted-feeling capstone — 5 cables rigged by a second person (or randomized beforehand) with faults from the whole season, diagnosed cold on camera</dd>
+      </dl>
+      <p>Ties the season together, reinforces the diagnostic <em>process</em> over memorized fixes. Strong finale / rewatch value.</p>
+    </div>
+  </section>
+
+  <section id="reference">
+    <h2 class="section-title">Quick Reference: Episode → Fault → Key Tool Lesson</h2>
+    <table>
+      <thead>
+        <tr><th>Ep</th><th>Fault</th><th>Primary Tool Lesson</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>02</td><td>568A/B mismatch</td><td>Wiremap basics</td></tr>
+        <tr><td>03</td><td>Improper wall plate termination</td><td>Wiremap + physical inspection</td></tr>
+        <tr><td>04</td><td>Cut conductors behind plate</td><td>Distance-to-fault (TDR)</td></tr>
+        <tr><td>05</td><td>Split pair</td><td>Cheap tester vs. certifier</td></tr>
+        <tr><td>06</td><td>Mislabeled runs</td><td>Tone/probe tracing</td></tr>
+        <tr><td>07</td><td>Bend radius violation</td><td>Degradation over time</td></tr>
+        <tr><td>08</td><td>Nail through jacket</td><td>Intermittent fault diagnosis</td></tr>
+        <tr><td>09</td><td>Panel-side fault</td><td>Two-end isolation habit</td></tr>
+        <tr><td>10</td><td>No documentation</td><td>Full trace-and-tag workflow</td></tr>
+        <tr><td>11</td><td>Dirty fiber end-face</td><td>Fiber scope inspection</td></tr>
+        <tr><td>12</td><td>PoE-killing damage</td><td>PoE-specific testing</td></tr>
+        <tr><td>13</td><td>Mixed / random</td><td>Full diagnostic process under pressure</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    Layer 1 Diagnostics — Season 1: Copper Fundamentals · Series bible &amp; episode outline
+  </footer>
+
+</div>
+</body>
+</html>
