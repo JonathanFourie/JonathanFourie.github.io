@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seuntjie — 12 Week Program V2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #f2ede3;
+    --ink: #232019;
+    --charcoal: #3a352c;
+    --accent-primary: #2f4d3a;     /* deep training green — strength/effort */
+    --accent-secondary: #a6432c;   /* burnt rust — recovery/intensity */
+    --accent-pale: #e3e6d9;        /* pale tint of primary */
+    --line: #d8cfbc;
+    --gold: #b68a4e;
+    --muted-light: #cfc9ba;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--charcoal);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── HEADER ─────────────────────────────────────────────────── */
+  header.masthead {
+    background: var(--ink);
+    color: #e8e3d6;
+    padding: 56px 0 0 0;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 560;
+    font-size: clamp(34px, 5.4vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    max-width: 700px;
+    color: #f2ede3;
+    margin-bottom: 16px;
+  }
+
+  .subline {
+    font-size: 15.5px;
+    color: #ada693;
+    max-width: 580px;
+    margin-bottom: 42px;
+  }
+
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #46412f;
+    padding-top: 26px;
+    padding-bottom: 44px;
+  }
+
+  .stat {
+    flex: 1 1 0;
+    min-width: 120px;
+    padding: 0 26px;
+    border-left: 1px solid #46412f;
+  }
+  .stat:first-child { padding-left: 0; border-left: none; }
+
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 540;
+    font-size: clamp(26px, 3.4vw, 36px);
+    color: #f2ede3;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-value.accent { color: var(--gold); }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93876b;
+  }
+
+  .stripe {
+    height: 6px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--accent-primary) 0px, var(--accent-primary) 12px,
+      var(--accent-secondary) 12px, var(--accent-secondary) 24px
+    );
+  }
+
+  /* ── SECTION (WEEK) LAYOUT ──────────────────────────────────── */
+  section.week {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 36px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .week-marker {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .week-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 540;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--accent-primary);
+  }
+
+  .week-number.phase2 { color: var(--accent-primary); }
+  .week-number.phase3 { color: var(--accent-secondary); }
+
+  .week-name {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+
+  .week-range {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    opacity: 0.65;
+    margin-top: 4px;
+  }
+
+  .phase-pill {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent-pale);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    border-radius: 2px;
+    width: fit-content;
+  }
+  .phase-pill.phase3 {
+    border-color: var(--accent-secondary);
+    color: var(--accent-secondary);
+    background: #f3e4dc;
+  }
+
+  .entries {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 78px 1fr auto;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: baseline;
+  }
+  .entry:last-child { border-bottom: none; }
+
+  .entry-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 2px;
+  }
+
+  .entry-main .entry-name {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+
+  .entry-main .entry-desc {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--charcoal);
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+
+  .entry-metric {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .week-note {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--accent-pale);
+    border-left: 3px solid var(--accent-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .week-note.phase3 {
+    background: #f3e4dc;
+    border-left-color: var(--accent-secondary);
+  }
+
+  /* ── WORKOUT DETAIL BLOCKS ───────────────────────────────────── */
+  section.workout-block {
+    border-top: 1px solid var(--line);
+    padding: 34px 0;
+  }
+
+  .wb-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .wb-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 560;
+    font-size: 24px;
+    color: var(--ink);
+  }
+
+  .wb-title .wb-letter {
+    color: var(--accent-primary);
+  }
+
+  .wb-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    opacity: 0.7;
+  }
+
+  table.wb-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 14px;
+  }
+
+  table.wb-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    opacity: 0.65;
+    text-align: left;
+    padding: 0 10px 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  table.wb-table td {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    padding: 10px 10px 10px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  table.wb-table td.mono {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--charcoal);
+  }
+
+  table.wb-table td.weight-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--accent-primary);
+  }
+
+  .wb-note {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--charcoal);
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  /* ── NOTES / PRINCIPLES ──────────────────────────────────────── */
+  section.notes {
+    border-top: 1px solid var(--line);
+    padding: 36px 0;
+  }
+
+  .notes-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 560;
+    font-size: 26px;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+
+  .principle {
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+  }
+  .principle:last-child { border-bottom: none; }
+
+  .principle-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 2px;
+  }
+
+  .principle-body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--charcoal);
+    line-height: 1.65;
+  }
+
+  /* Info grid — equipment order */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .info-cell {
+    border-top: 2px solid var(--accent-primary);
+    padding-top: 12px;
+  }
+  .info-cell.alt { border-top-color: var(--accent-secondary); }
+
+  .info-cell-head {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    opacity: 0.65;
+    margin-bottom: 8px;
+  }
+
+  .info-cell-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 540;
+    font-size: 19px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .info-cell-desc {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--charcoal);
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  /* ── CLOSING CALLOUT ─────────────────────────────────────────── */
+  .callout {
+    background: var(--ink);
+    border-radius: 4px;
+    padding: 40px 36px;
+    margin: 48px 0 64px 0;
+  }
+
+  .callout-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .callout-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 560;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    max-width: 520px;
+    line-height: 1.15;
+  }
+
+  .callout-body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14.5px;
+    color: #beb6a0;
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  footer.page-footer {
+    text-align: center;
+    padding: 28px 0 48px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    opacity: 0.55;
+  }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+
+    section.week {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .week-marker {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .week-number { font-size: 38px; }
+
+    .stat-row {
+      flex-direction: column;
+    }
+    .stat {
+      border-left: none;
+      border-top: 1px solid #46412f;
+      padding: 16px 0;
+    }
+    .stat:first-child { border-top: none; padding-top: 0; }
+
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .entry-metric { text-align: left; }
+
+    .principle {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    table.wb-table { font-size: 12px; }
+    table.wb-table th:nth-child(5),
+    table.wb-table td:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Training Ledger — Field Copy</div>
+    <h1 class="title">Seuntjie 12&nbsp;Week Program V2</h1>
+    <p class="subline">A kettlebell strength progression built to build muscle and drive down visceral fat — three phases, four working sizes, one benchmark session to chase.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-value accent">12</div>
+        <div class="stat-label">Weeks</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Phases</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">4–5</div>
+        <div class="stat-label">Sessions / wk</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">12·16·20</div>
+        <div class="stat-label">Kg on hand</div>
+      </div>
+    </div>
+  </div>
+  <div class="stripe"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- ══════ PROGRAM OVERVIEW — PHASE 1 ══════ -->
+  <section class="week">
+    <div class="week-marker">
+      <div class="week-number">01</div>
+      <div class="week-name">Foundation</div>
+      <div class="week-range">Weeks 1 – 4</div>
+      <span class="phase-pill">Phase 1</span>
+    </div>
+    <div class="entries">
+      <div class="entry">
+        <div class="entry-tag">Mon</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout A — Lower Body Strength</div>
+          <div class="entry-desc">Goblet squat, RDL, sumo deadlift, reverse lunge, glute bridge</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Wed</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout B — Upper Push + Core</div>
+          <div class="entry-desc">Floor press, Arnold press, push press, renegade row</div>
+        </div>
+        <div class="entry-metric">45 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Fri</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout C — Full Body Metabolic</div>
+          <div class="entry-desc">Swings, clean + press, squat-to-press, suitcase carry, thruster</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Sat</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout D — Upper Pull + Hinge</div>
+          <div class="entry-desc">Single-arm row, double deadlift, upright row, halo, windmill</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding:0;">
+    <div class="week-note" style="margin: -12px 0 0 184px; max-width: 640px;">
+      Technique first. Skill Session introduced Week 3 at reduced volume — 2 warm-up rounds, 6–8 reps, 12&nbsp;kg only. Use 16&nbsp;kg over 20&nbsp;kg on any lift where form breaks down.
+    </div>
+  </div>
+
+  <!-- ══════ PHASE 2 ══════ -->
+  <section class="week">
+    <div class="week-marker">
+      <div class="week-number phase2">02</div>
+      <div class="week-name">Build</div>
+      <div class="week-range">Weeks 5 – 8</div>
+      <span class="phase-pill">Phase 2</span>
+    </div>
+    <div class="entries">
+      <div class="entry">
+        <div class="entry-tag">Mon</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout A — Lower Body Strength</div>
+          <div class="entry-desc">Add 1 rep/set weekly or drop 10s rest</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Tue</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout B — Upper Push + Core</div>
+          <div class="entry-desc">Shift toward 16 kg on presses</div>
+        </div>
+        <div class="entry-metric">45 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Thu</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout C — Full Body Metabolic</div>
+          <div class="entry-desc">Biggest calorie burner of the week</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Fri</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout S — Skill Session</div>
+          <div class="entry-desc">Benchmark day — 3 rounds warm-up, target 10 reps each arm</div>
+        </div>
+        <div class="entry-metric">45 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Sat</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout D — Upper Pull + Hinge</div>
+          <div class="entry-desc">Posterior chain and back health focus</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding:0;">
+    <div class="week-note" style="margin: -12px 0 0 184px; max-width: 640px;">
+      Skill Session now a fixed weekly fixture. Target full 3 warm-up rounds, 10 reps per exercise. Begin using 16&nbsp;kg on swings; hold 12&nbsp;kg on windmills until form is clean.
+    </div>
+  </div>
+
+  <!-- ══════ PHASE 3 ══════ -->
+  <section class="week">
+    <div class="week-marker">
+      <div class="week-number phase3">03</div>
+      <div class="week-name">Intensity</div>
+      <div class="week-range">Weeks 9 – 12</div>
+      <span class="phase-pill phase3">Phase 3</span>
+    </div>
+    <div class="entries">
+      <div class="entry">
+        <div class="entry-tag">Mon</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout A — Lower Body Strength</div>
+          <div class="entry-desc">Max compound intensity, rest cut by 15s</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Tue</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout B — Upper Push + Core</div>
+          <div class="entry-desc">Full loading across all pressing movements</div>
+        </div>
+        <div class="entry-metric">45 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Thu</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout C — Full Body Metabolic</div>
+          <div class="entry-desc">Single-arm swings replace two-hand where possible</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Fri</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout S — Skill Session</div>
+          <div class="entry-desc">Full benchmark: 3×10 each arm, all four lifts</div>
+        </div>
+        <div class="entry-metric">45 min</div>
+      </div>
+      <div class="entry">
+        <div class="entry-tag">Sat</div>
+        <div class="entry-main">
+          <div class="entry-name">Workout D — Upper Pull + Hinge</div>
+          <div class="entry-desc">Add 5-min walk cooldown after session</div>
+        </div>
+        <div class="entry-metric">50 min</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding:0;">
+    <div class="week-note phase3" style="margin: -12px 0 0 184px; max-width: 640px;">
+      Full benchmark achieved: 3 rounds warm-up, 10×3 all Skill Session exercises. Progress weight where possible — 16&nbsp;kg press, 16&nbsp;kg windmill. Reduce rest by 15s per session on A/B/C/D.
+    </div>
+  </div>
+
+  <!-- ══════ WORKOUT DETAILS ══════ -->
+  <section class="workout-block">
+    <div class="wb-head">
+      <div class="wb-title"><span class="wb-letter">A</span> — Lower Body Strength</div>
+      <div class="wb-meta">50 min · Mon</div>
+    </div>
+    <table class="wb-table">
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th><th>Rest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Kettlebell goblet squat</td><td class="mono">4</td><td class="mono">10–12</td><td class="weight-tag">20 kg</td><td class="mono">90s</td></tr>
+        <tr><td>Romanian deadlift (single KB)</td><td class="mono">3</td><td class="mono">10 each</td><td class="weight-tag">20 kg</td><td class="mono">75s</td></tr>
+        <tr><td>KB sumo deadlift</td><td class="mono">4</td><td class="mono">8–10</td><td class="weight-tag">20 kg</td><td class="mono">90s</td></tr>
+        <tr><td>Reverse lunge (alternating)</td><td class="mono">3</td><td class="mono">10 each</td><td class="weight-tag">12 kg</td><td class="mono">60s</td></tr>
+        <tr><td>Glute bridge march</td><td class="mono">3</td><td class="mono">12 each</td><td class="mono">Bodyweight</td><td class="mono">45s</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-note">Heavy lower-body compounds drive the most metabolic demand. Keep rest times honest — don't cut them short.</div>
+  </section>
+
+  <section class="workout-block">
+    <div class="wb-head">
+      <div class="wb-title"><span class="wb-letter">B</span> — Upper Body Push + Core</div>
+      <div class="wb-meta">45 min · Tue / Wed</div>
+    </div>
+    <table class="wb-table">
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th><th>Rest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>KB floor press</td><td class="mono">4</td><td class="mono">10–12</td><td class="weight-tag">16 kg</td><td class="mono">75s</td></tr>
+        <tr><td>KB Arnold press (standing)</td><td class="mono">3</td><td class="mono">10</td><td class="weight-tag">12 kg</td><td class="mono">75s</td></tr>
+        <tr><td>KB push press</td><td class="mono">3</td><td class="mono">8</td><td class="weight-tag">16 kg</td><td class="mono">90s</td></tr>
+        <tr><td>KB renegade row</td><td class="mono">3</td><td class="mono">8 each</td><td class="weight-tag">12 kg</td><td class="mono">60s</td></tr>
+        <tr><td>Hollow body hold</td><td class="mono">3</td><td class="mono">30s</td><td class="mono">Bodyweight</td><td class="mono">45s</td></tr>
+        <tr><td>Dead bug</td><td class="mono">3</td><td class="mono">8 each</td><td class="mono">Bodyweight</td><td class="mono">45s</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-note">Renegade rows and dead bugs target the deep abdominal wall over visceral fat. Prioritise form over load.</div>
+  </section>
+
+  <section class="workout-block">
+    <div class="wb-head">
+      <div class="wb-title"><span class="wb-letter">C</span> — Full Body Metabolic</div>
+      <div class="wb-meta">50 min · Fri / Thu</div>
+    </div>
+    <table class="wb-table">
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th><th>Rest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>KB swing (two-hand)</td><td class="mono">5</td><td class="mono">15</td><td class="weight-tag">20 kg</td><td class="mono">60s</td></tr>
+        <tr><td>KB clean + press</td><td class="mono">4</td><td class="mono">6 each</td><td class="weight-tag">16 kg</td><td class="mono">90s</td></tr>
+        <tr><td>KB goblet squat to press</td><td class="mono">3</td><td class="mono">10</td><td class="weight-tag">16 kg</td><td class="mono">75s</td></tr>
+        <tr><td>KB suitcase carry (30m)</td><td class="mono">3</td><td class="mono">30m each</td><td class="weight-tag">20 kg</td><td class="mono">60s</td></tr>
+        <tr><td>KB thruster</td><td class="mono">3</td><td class="mono">8</td><td class="weight-tag">12 kg</td><td class="mono">60s</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-note">Your biggest calorie burner. Swings and thrusters spike heart rate into the zone that most aggressively targets visceral fat.</div>
+  </section>
+
+  <section class="workout-block">
+    <div class="wb-head">
+      <div class="wb-title"><span class="wb-letter">D</span> — Upper Body Pull + Hinge</div>
+      <div class="wb-meta">50 min · Sat</div>
+    </div>
+    <table class="wb-table">
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th><th>Rest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>KB single-arm row</td><td class="mono">4</td><td class="mono">10 each</td><td class="weight-tag">20 kg</td><td class="mono">75s</td></tr>
+        <tr><td>KB deadlift (two KB)</td><td class="mono">4</td><td class="mono">8</td><td class="weight-tag">20 kg ×2</td><td class="mono">90s</td></tr>
+        <tr><td>KB upright row</td><td class="mono">3</td><td class="mono">10</td><td class="weight-tag">16 kg</td><td class="mono">60s</td></tr>
+        <tr><td>KB halo</td><td class="mono">3</td><td class="mono">8 each dir.</td><td class="weight-tag">12 kg</td><td class="mono">45s</td></tr>
+        <tr><td>Plank (feet-elevated)</td><td class="mono">3</td><td class="mono">40s</td><td class="mono">Bodyweight</td><td class="mono">45s</td></tr>
+        <tr><td>KB windmill</td><td class="mono">2</td><td class="mono">5 each</td><td class="weight-tag">12 kg</td><td class="mono">60s</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-note">A strong posterior chain protects your lower back as you lose fat and increase intensity.</div>
+  </section>
+
+  <section class="workout-block">
+    <div class="wb-head">
+      <div class="wb-title"><span class="wb-letter">S</span> — Skill Session (Benchmark)</div>
+      <div class="wb-meta">45 min · From Phase 2</div>
+    </div>
+    <table class="wb-table">
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th><th>Rest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Bodyweight squat (warm-up)</td><td class="mono">2–3</td><td class="mono">20</td><td class="mono">Bodyweight</td><td class="mono">—</td></tr>
+        <tr><td>Push-up (warm-up)</td><td class="mono">2–3</td><td class="mono">20</td><td class="mono">Bodyweight</td><td class="mono">—</td></tr>
+        <tr><td>KB swing (single arm)</td><td class="mono">3</td><td class="mono">10 each</td><td class="weight-tag">16 kg</td><td class="mono">60s</td></tr>
+        <tr><td>KB press (single arm)</td><td class="mono">3</td><td class="mono">10 each</td><td class="weight-tag">12 kg</td><td class="mono">75s</td></tr>
+        <tr><td>KB windmill</td><td class="mono">3</td><td class="mono">10 each</td><td class="weight-tag">12 kg</td><td class="mono">60s</td></tr>
+        <tr><td>KB renegade row</td><td class="mono">3</td><td class="mono">10 each</td><td class="weight-tag">12 kg</td><td class="mono">60s</td></tr>
+      </tbody>
+    </table>
+    <div class="wb-note">This is your benchmark session — log every rep. Once completed cleanly for 2 consecutive weeks, increase KB weight by one size.</div>
+  </section>
+
+  <!-- ══════ PROGRESSION & PRINCIPLES ══════ -->
+  <section class="notes">
+    <div class="notes-title">Progression &amp; Key Principles</div>
+
+    <div class="principle">
+      <div class="principle-name">Overload</div>
+      <div class="principle-body">Each week, do one of: add 1 rep per set, reduce rest by 10s, or increase weight by one KB size. Never change more than one variable at once.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-name">Skill session</div>
+      <div class="principle-body">Phase 1 (Wk 3–4): 2 warm-up rounds, 6–8 reps, 12 kg. Phase 2: 3 rounds, 10 reps, 12–16 kg. Phase 3: full benchmark, 16 kg swings/rows, 12–16 kg windmills/press.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-name">Equipment order</div>
+      <div class="principle-body">Single 24 kg (buy now) → Single 28 kg (~Wk 8) → Steel mace 7 kg (after Phase 1) → Second 24 kg (~Mo 4–5) → Single 32 kg (~Mo 5–6).</div>
+    </div>
+    <div class="principle">
+      <div class="principle-name">Visceral fat</div>
+      <div class="principle-body">Responds to: (1) heavy compound strength work, (2) a 300–400 kcal daily deficit, (3) 7–8 hours sleep. Target 2,000–2,100 kcal/day with 180–200g protein.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-name">Warm-up</div>
+      <div class="principle-body">5 min every session: 10 hip circles each direction, 10 leg swings each leg, 10 arm circles, 10 bodyweight squats, 10 hip hinges.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-name">Cool-down</div>
+      <div class="principle-body">5 min: hip flexor stretch, hamstring stretch, thoracic rotation, child's pose. Phase 3: add a 5-min walk after each session.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-name">Tracking</div>
+      <div class="principle-body">Weigh on RENPHO every 2 weeks, same time of day. Visceral fat score is the primary metric — body weight fluctuates, visceral fat does not lie.</div>
+    </div>
+  </section>
+
+  <!-- ══════ EQUIPMENT BUY ORDER — INFO GRID ══════ -->
+  <section class="notes">
+    <div class="notes-title">Equipment Buy Order</div>
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-cell-head">Priority 01</div>
+        <div class="info-cell-value">24 kg kettlebell</div>
+        <div class="info-cell-desc">Buy now. You'll outgrow the 20 kg within weeks on swings and squats.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-head">Priority 02</div>
+        <div class="info-cell-value">28 kg kettlebell</div>
+        <div class="info-cell-desc">Around Week 8. Bridge weight for swings and heavy compound work.</div>
+      </div>
+      <div class="info-cell alt">
+        <div class="info-cell-head">Priority 03</div>
+        <div class="info-cell-value">Steel mace, 7 kg</div>
+        <div class="info-cell-desc">After Phase 1. Rotational strength and shoulder stability.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-head">Priority 04</div>
+        <div class="info-cell-value">Second 24 kg</div>
+        <div class="info-cell-desc">Month 4–5. Unlocks double front squats and double presses.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-head">Priority 05</div>
+        <div class="info-cell-value">32 kg kettlebell</div>
+        <div class="info-cell-desc">Month 5–6. Heavy singles — get-ups, deadlifts, swings.</div>
+      </div>
+      <div class="info-cell alt">
+        <div class="info-cell-head">Reference</div>
+        <div class="info-cell-value">Starting stats</div>
+        <div class="info-cell-desc">100.5 kg · 31.3% BF · Visceral 12 · 65.6 kg muscle · BMR 1,861</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ CLOSING CALLOUT ══════ -->
+  <div class="callout">
+    <div class="callout-eyebrow">The one thing that matters</div>
+    <div class="callout-title">Show up, log the set, chase the benchmark.</div>
+    <div class="callout-body">Everything in this program funnels toward one session — Workout S. Three rounds of warm-up, ten reps a side, four lifts, clean. When you hit it twice in a row, the kettlebell gets heavier and the program moves with you.</div>
+  </div>
+
+</div>
+
+<footer class="page-footer">Seuntjie · 12 Week Program V2 · Field Copy</footer>
+
+</body>
+</html>
